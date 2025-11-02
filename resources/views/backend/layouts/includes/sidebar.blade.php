@@ -53,6 +53,13 @@
                 data-bs-parent="#sidebar-nav">
                 @can('create-student')
                 <li>
+                    <a href="{{ route('students.bulk-upload.form') }}"
+                        class="{{ Route::currentRouteName() == 'students.bulk-upload.form' ? 'active nav-link' : '' }}">
+                        <i class="bi bi-circle"></i><span>Bulk Upload Students</span>
+                    </a>
+                </li>
+                
+                <li>
                     <a href="{{ route('students.create') }}"
                         class="{{ Route::currentRouteName() == 'students.create' ? 'active nav-link' : '' }}">
                         <i class="bi bi-circle"></i><span>Add Student</span>

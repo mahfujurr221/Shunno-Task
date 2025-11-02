@@ -19,6 +19,7 @@ use App\Http\Controllers\Backend\TeacherController;
 | Default route (show login if not logged in)
 |--------------------------------------------------------------------------
 */
+
 Route::get('/', function () {
     if (auth()->check()) {
         return redirect()->route('dashboard');
@@ -35,16 +36,20 @@ Route::middleware('auth')->prefix('back')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
     //class
-    Route::resource('classes', ClassController::class)->except(['show','create','edit']);
+    Route::resource('classes', ClassController::class)->except(['show', 'create', 'edit']);
 
     //section
-    Route::resource('sections', SectionController::class)->except(['show','create','edit']);
+    Route::resource('sections', SectionController::class)->except(['show', 'create', 'edit']);
 
     //subject
-    Route::resource('subjects', SubjectController::class)->except(['show','create','edit']);
+    Route::resource('subjects', SubjectController::class)->except(['show', 'create', 'edit']);
 
     /////////////// Students ///////////////
     Route::resource('students', StudentController::class);
+    Route::get('student-bulk-upload', [StudentController::class, 'bulkUploadForm'])->name('students.bulk-upload.form');
+    Route::get('students/template', [StudentController::class, 'downloadTemplate'])->name('students.template');
+    Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
+
 
     /////////////// Teachers ///////////////
     Route::resource('teachers', TeacherController::class);

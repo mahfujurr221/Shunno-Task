@@ -9,6 +9,9 @@ use App\Models\StudentSection;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\StudentsImport;
+use Illuminate\Support\Facades\Response;
 
 class StudentController extends Controller
 {
@@ -229,6 +232,48 @@ class StudentController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Something went wrong: ' . $e->getMessage());
+        }
+    }
+
+    //bulk upload form
+    public function bulkUploadForm()
+    {
+        return view('backend.pages.student.bulk-upload');
+    }
+    //////////////////////////// Download CSV Template ////////////////////////////
+
+    public function downloadTemplate()
+    {
+        $headers = ['first_name', 'last_name', 'email', 'phone', 'address', 'dob', 'class', 'section'];
+
+        $callback = function () use ($headers) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $headers);
+            fclose($file);
+        };
+
+        $fileName = 'students_template.csv';
+        return Response::stream($callback, 200, [
+            "Content-Type" => "text/csv",
+            "Content-Disposition" => "attachment; filename={$fileName}"
+        ]);
+    }
+
+
+    //////////////////////////// Import Students from CSV ////////////////////////////
+    
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv'
+        ]);
+
+        try {
+            Excel::import(new StudentsImport, $request->file('file'));
+            toast('Students imported successfully!', 'success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error: ' . $e->getMessage());
         }
     }
 }
