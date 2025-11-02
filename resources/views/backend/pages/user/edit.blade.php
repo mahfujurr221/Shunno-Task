@@ -49,7 +49,7 @@
 
                 <div class="mb-2 col-md-6">
                     <label class="form-label">Phone<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control {{$errors->has('phone') ? 'is-invalid' : ''}}" name="phone"
+                    <input type="number" class="form-control {{$errors->has('phone') ? 'is-invalid' : ''}}" name="phone"
                         value="{{ $user->phone??old('phone') }}">
                 </div>
 
