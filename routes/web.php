@@ -8,6 +8,11 @@ use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\ClassController;
+use App\Http\Controllers\Backend\SectionController;
+use App\Http\Controllers\Backend\SubjectController;
+use App\Http\Controllers\Backend\StudentController;
+use App\Http\Controllers\Backend\TeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +33,22 @@ Route::get('/', function () {
 */
 Route::middleware('auth')->prefix('back')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+
+    //class
+    Route::resource('classes', ClassController::class)->except(['show','create','edit']);
+
+    //section
+    Route::resource('sections', SectionController::class)->except(['show','create','edit']);
+
+    //subject
+    Route::resource('subjects', SubjectController::class)->except(['show','create','edit']);
+
+    /////////////// Students ///////////////
+    Route::resource('students', StudentController::class);
+
+    /////////////// Teachers ///////////////
+    Route::resource('teachers', TeacherController::class);
+
 
     /////////////// Roles & Permissions ///////////////
     Route::resource('permissions', PermissionController::class);

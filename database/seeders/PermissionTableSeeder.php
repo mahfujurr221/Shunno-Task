@@ -40,6 +40,36 @@ class PermissionTableSeeder extends Seeder
             'edit-profile',
             'delete-profile',
 
+            //class
+            'list-class',
+            'create-class',
+            'edit-class',
+            'delete-class',
+
+            //section
+            'list-section',
+            'create-section',
+            'edit-section',
+            'delete-section',
+
+            //subject
+            'list-subject',
+            'create-subject',
+            'edit-subject',
+            'delete-subject',
+
+            //student
+            'list-student',
+            'create-student',
+            'edit-student',
+            'delete-student',
+            
+            //teacher
+            'list-teacher',
+            'create-teacher',
+            'edit-teacher',
+            'delete-teacher',
+
             //setting
             'update-setting',
 
