@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary">Search</button>
-                    <a href="{{ route('users.index') }}" class="btn btn-danger">Clear</a>
+                    <a href="{{ route('students.index') }}" class="btn btn-danger">Clear</a>
                 </div>
             </div>
         </form>
