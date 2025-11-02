@@ -3,6 +3,6 @@
         &copy; Copyright <strong><span>Shunno</span></strong>
     </div>
     <div class="credits">
-        Developed by <a href="https://webgeniebd.com/">WebgeniusBD</a>
+        Developed by <a href="https://webgeniebd.com/">Mahfujur Rahman</a>
     </div>
 </footer>

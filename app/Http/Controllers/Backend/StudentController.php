@@ -176,7 +176,6 @@ class StudentController extends Controller
 
             // Handle image upload
             if ($request->hasFile('image')) {
-                // Delete old image if exists
                 if ($student->image && file_exists(public_path($student->image))) {
                     unlink(public_path($student->image));
                 }
@@ -204,7 +203,7 @@ class StudentController extends Controller
             return back()->withInput()->with('error', 'Something went wrong: ' . $e->getMessage());
         }
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

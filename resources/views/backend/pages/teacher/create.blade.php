@@ -2,11 +2,11 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h4 class="card-title">Create Student</h4>
-        <a href="{{ route('students.index') }}" class="btn btn-primary"><i class="bi bi-list"></i> Student List</a>
+        <h4 class="card-title">Create Teacher</h4>
+        <a href="{{ route('teachers.index') }}" class="btn btn-primary"><i class="bi bi-list"></i> Teacher List</a>
     </div>
 
-    <form action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('teachers.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
             <div class="mt-3 row">
@@ -56,40 +56,16 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label">Date of Birth <span class="text-danger">*</span></label>
-                    <input type="date" name="dob" value="{{ old('dob') }}"
-                        class="form-control {{ $errors->has('dob') ? 'is-invalid' : '' }}">
-                    @error('dob')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Class <span class="text-danger">*</span></label>
-                    <select name="class_id" class="form-select {{ $errors->has('class_id') ? 'is-invalid' : '' }}">
-                        <option value="">-- Select Class --</option>
-                        @foreach ($classes as $class)
-                            <option value="{{ $class->id }}" {{ old('class_id') == $class->id ? 'selected' : '' }}>
-                                {{ $class->name }}
+                    <label class="form-label">Subject <span class="text-danger">*</span></label>
+                    <select name="subject_id" class="form-select {{ $errors->has('subject_id') ? 'is-invalid' : '' }}">
+                        <option value="">-- Select Subject --</option>
+                        @foreach ($subjects as $subject)
+                            <option value="{{ $subject->id }}" {{ old('subject_id') == $subject->id ? 'selected' : '' }}>
+                                {{ $subject->name }}
                             </option>
                         @endforeach
                     </select>
-                    @error('class_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Section <span class="text-danger">*</span></label>
-                    <select name="section_id" class="form-select {{ $errors->has('section_id') ? 'is-invalid' : '' }}">
-                        <option value="">-- Select Section --</option>
-                        @foreach ($sections as $section)
-                            <option value="{{ $section->id }}" {{ old('section_id') == $section->id ? 'selected' : '' }}>
-                                {{ $section->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('section_id')
+                    @error('subject_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -113,7 +89,7 @@
                 </div>
 
                 <div class="text-center col-md-6">
-                    <label class="form-label">Student Image</label>
+                    <label class="form-label">Teacher Image</label>
                     <input type="file" name="image" id="imageInput"
                         class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" accept="image/*">
                     @error('image')
@@ -146,7 +122,7 @@
             reader.onload = e => imagePreview.src = e.target.result;
             reader.readAsDataURL(file);
         } else {
-            imagePreview.src = "{{ asset('uploads/students/default.png') }}";
+            imagePreview.src = "{{ asset('uploads/user.png') }}";
         }
     });
 </script>

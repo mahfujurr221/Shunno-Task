@@ -7,26 +7,24 @@
                 <h4 class="card-title">Edit Student</h4>
             </div>
             <div class="col-md-6 text-end">
-                <a href="{{ route('students.index') }}" class="btn btn-primary">
-                    <i class="bi bi-list"></i> Student List
+                <a href="{{ route('teachers.index') }}" class="btn btn-primary">
+                    <i class="bi bi-list"></i> Teacher List
                 </a>
             </div>
         </div>
     </div>
 
-    <form action="{{ route('students.update', $student->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('teachers.update', $teacher->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-
         <div class="card-body">
             <div class="mt-3 row">
-
                 {{-- First Name --}}
                 <div class="mb-2 col-md-6">
                     <label class="form-label">First Name<span class="text-danger">*</span></label>
                     <input class="form-control {{ $errors->has('fname') ? 'is-invalid' : '' }}" 
                            type="text" name="fname" placeholder="Enter First Name" 
-                           value="{{ old('fname', $student->user->fname) }}">
+                           value="{{ old('fname', $teacher->user->fname) }}">
                     @error('fname')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -37,7 +35,7 @@
                     <label class="form-label">Last Name<span class="text-danger">*</span></label>
                     <input class="form-control {{ $errors->has('lname') ? 'is-invalid' : '' }}" 
                            type="text" name="lname" placeholder="Enter Last Name" 
-                           value="{{ old('lname', $student->user->lname) }}">
+                           value="{{ old('lname', $teacher->user->lname) }}">
                     @error('lname')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -48,7 +46,7 @@
                     <label class="form-label">Email<span class="text-danger">*</span></label>
                     <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" 
                            type="text" name="email" placeholder="Enter Email" 
-                           value="{{ old('email', $student->user->email) }}">
+                           value="{{ old('email', $teacher->user->email) }}">
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -58,7 +56,7 @@
                 <div class="mb-2 col-md-6">
                     <label class="form-label">Phone<span class="text-danger">*</span></label>
                     <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" 
-                           type="number" name="phone" value="{{ old('phone', $student->user->phone) }}">
+                           type="number" name="phone" value="{{ old('phone', $teacher->user->phone) }}">
                     @error('phone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -69,53 +67,25 @@
                     <label class="form-label">Address<span class="text-danger">*</span></label>
                     <textarea name="address" 
                               class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}"
-                              placeholder="Enter Address">{{ old('address', $student->address) }}</textarea>
+                              placeholder="Enter Address">{{ old('address', $teacher->address) }}</textarea>
                     @error('address')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                {{-- DOB --}}
+                {{-- Subject --}}
                 <div class="mb-3 col-md-6">
-                    <label class="form-label">Date of Birth<span class="text-danger">*</span></label>
-                    <input type="date" name="dob" 
-                           value="{{ old('dob', $student->dob) }}"
-                           class="form-control {{ $errors->has('dob') ? 'is-invalid' : '' }}">
-                    @error('dob')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- Class --}}
-                <div class="mb-3 col-md-6">
-                    <label class="form-label">Class<span class="text-danger">*</span></label>
-                    <select name="class_id" class="form-select {{ $errors->has('class_id') ? 'is-invalid' : '' }}">
-                        <option value="">-- Select Class --</option>
-                        @foreach ($classes as $class)
-                            <option value="{{ $class->id }}" 
-                                {{ old('class_id', $student->class_id) == $class->id ? 'selected' : '' }}>
-                                {{ $class->name }}
+                    <label class="form-label">Subject<span class="text-danger">*</span></label>
+                    <select name="subject_id" class="form-select {{ $errors->has('subject_id') ? 'is-invalid' : '' }}">
+                        <option value="">-- Select Subject --</option>
+                        @foreach ($subjects as $subject)
+                            <option value="{{ $subject->id }}" 
+                                {{ old('subject_id', $teacher->subject_id) == $subject->id ? 'selected' : '' }}>
+                                {{ $subject->name }}
                             </option>
                         @endforeach
                     </select>
-                    @error('class_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- Section --}}
-                <div class="mb-3 col-md-6">
-                    <label class="form-label">Section<span class="text-danger">*</span></label>
-                    <select name="section_id" class="form-select {{ $errors->has('section_id') ? 'is-invalid' : '' }}">
-                        <option value="">-- Select Section --</option>
-                        @foreach ($sections as $section)
-                            <option value="{{ $section->id }}" 
-                                {{ old('section_id', $student->section_id) == $section->id ? 'selected' : '' }}>
-                                {{ $section->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('section_id')
+                    @error('subject_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -131,7 +101,7 @@
 
                     <div class="mt-3 text-center">
                         <img id="imagePreview" 
-                             src="{{ $student->image ? asset($student->image) : asset('uploads/user.png') }}" 
+                             src="{{ $teacher->image ? asset($teacher->image) : asset('uploads/user.png') }}"
                              alt="Preview"
                              class="rounded img-thumbnail" 
                              style="max-width: 180px; height: 180px; object-fit: cover;">
