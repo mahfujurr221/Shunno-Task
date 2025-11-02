@@ -3,24 +3,26 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:list-subject', ['only' => ['index']]);
+        $this->middleware('can:create-subject', ['only' => ['store']]);
+        $this->middleware('can:edit-subject', ['only' => ['update']]);
+        $this->middleware('can:delete-subject', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $subjects = Subject::orderBy('id', 'desc')->get();
+        return view('backend.pages.subject.index', compact('subjects'));
     }
 
     /**
@@ -28,23 +30,14 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'name' => 'required|unique:subjects,name',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        Subject::create($validated);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        toast('Subject Created Successfully!', 'success');
+        return redirect()->route('subjects.index');
     }
 
     /**
@@ -52,7 +45,16 @@ class SubjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $subject = Subject::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|unique:subjects,name,' . $subject->id,
+        ]);
+
+        $subject->update($validated);
+
+        toast('Subject Updated Successfully!', 'success');
+        return redirect()->route('subjects.index');
     }
 
     /**
@@ -60,6 +62,10 @@ class SubjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $subject = Subject::findOrFail($id);
+        $subject->delete();
+
+        toast('Subject Deleted Successfully!', 'success');
+        return redirect()->route('subjects.index');
     }
 }
