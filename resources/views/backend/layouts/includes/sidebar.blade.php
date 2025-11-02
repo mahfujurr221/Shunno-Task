@@ -16,7 +16,7 @@
         <li class="nav-item">
             <a class="nav-link {{ Route::currentRouteName() == 'classes.index' ? '' : 'collapsed' }}"
                 href="{{ route('classes.index') }}">
-                <i class="bi bi-school-fill"></i>
+                <i class="bi bi-building-fill"></i>
                 <span>Class</span>
             </a>
         </li>

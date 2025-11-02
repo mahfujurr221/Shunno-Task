@@ -4,27 +4,27 @@
     <div class="card-header">
         <div class="row">
             <div class="col-md-6">
-                <h4 class="card-title">Category List</h4>
+                <h4 class="card-title">Class List</h4>
             </div>
             <div class="col-md-6 text-end">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                    <i class="bi bi-plus"></i> Add New Category
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addClassModal">
+                    <i class="bi bi-plus"></i> Add New Class
                 </button>
             </div>
         </div>
     </div>
     <div class="card-body">
-        <x-table :columns="['#', 'Category Name', 'Action']">
-            @forelse ($categories as $key => $data)
+        <x-table :columns="['#', 'Class Name', 'Action']">
+            @forelse ($classes as $key => $data)
             <tr class="text-center">
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $data->name??'' }}</td>
+                <td>{{ $data->name }}</td>
                 <td>
                     <button class="btn btn-info btn-sm editButton" data-bs-toggle="modal"
-                        data-bs-target="#editCategoryModal" data-id="{{ $data->id }}" data-name="{{ $data->name }}" title="Edit">
+                        data-bs-target="#editClassModal" data-id="{{ $data->id }}" data-name="{{ $data->name }}" title="Edit">
                         <i class="bi bi-pencil"></i> 
                     </button>
-                    <form action="{{ route('food-categories.destroy', $data->id) }}" method="POST" style="display: inline-block">
+                    <form action="{{ route('classes.destroy', $data->id) }}" method="POST" style="display: inline-block">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm"
@@ -44,26 +44,26 @@
 </div>
 
 {{-- Add Modal --}}
-<x-modal id="addCategoryModal" title="Add New Role" action="{{ route('food-categories.store') }}">
+<x-modal id="addClassModal" title="Add New Class" action="{{ route('classes.store') }}">
     <x-slot name="footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Save changes</button>
     </x-slot>
-    <x-input type="text" name="name" placeholder="Enter Category Name" />
+    <x-input type="text" name="name" placeholder="Enter Class Name" />
     @error('name')
     <span class="text-danger">{{ $message }}</span>
     @enderror
 </x-modal>
 
 {{-- Edit Modal --}}
-<x-modal id="editCategoryModal" title="Update Category" method="POST">
+<x-modal id="editClassModal" title="Update Class" method="POST">
     @csrf
     @method('PUT')
     <x-slot name="footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Update changes</button>
     </x-slot>
-    <x-input id="edit_name" type="text" name="name" placeholder="Enter Category Name" value="{{ $data->name??'' }}" />
+    <x-input id="edit_name" type="text" name="name" placeholder="Enter Class Name" />
     @error('name')
     <span class="text-danger">{{ $message }}</span>
     @enderror
@@ -77,10 +77,10 @@
         var id = $(this).data('id');
         var name = $(this).data('name');
 
-        var url= "{{ route('food-categories.update', ':id') }}";
+        var url= "{{ route('classes.update', ':id') }}";
         url = url.replace(':id', id);
 
-        $('#editCategoryModal form').attr('action', url);
+        $('#editClassModal form').attr('action', url);
         $('#edit_name').val(name);
         
     });
