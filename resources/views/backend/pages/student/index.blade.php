@@ -16,9 +16,9 @@
                     <select name="class_id" class="form-select">
                         <option value="">Select Class</option>
                         @foreach($classes as $class)
-                            <option value="{{ $class->id }}" {{ request()->class_id == $class->id ? 'selected' : '' }}>
-                                {{ $class->name }}
-                            </option>
+                        <option value="{{ $class->id }}" {{ request()->class_id == $class->id ? 'selected' : '' }}>
+                            {{ $class->name }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -26,9 +26,10 @@
                     <select name="section_id" class="form-select">
                         <option value="">Select Section</option>
                         @foreach($sections as $section)
-                            <option value="{{ $section->id }}" {{ request()->section_id == $section->id ? 'selected' : '' }}>
-                                {{ $section->name }}
-                            </option>
+                        <option value="{{ $section->id }}" {{ request()->section_id == $section->id ? 'selected' : ''
+                            }}>
+                            {{ $section->name }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -48,12 +49,17 @@
                 <h4 class="card-title">Student List</h4>
             </div>
             <div class="col-md-6 text-end">
+                <a href="{{ route('students.export') }}" class="btn btn-success ms-2">
+                    <i class="bi bi-download"></i> Export Students
+                </a>
+                
                 <a href="{{ route('students.create') }}" class="btn btn-primary">
                     <i class="bi bi-plus"></i> Add Student
                 </a>
             </div>
         </div>
     </div>
+
 
     <div class="card-body">
         <x-table :columns="['#', 'Image', 'Name', 'Email', 'Phone', 'DOB', 'Class', 'Section', 'Action']">
@@ -74,7 +80,8 @@
                     <a href="{{ route('students.edit', $student->id) }}" class="btn btn-info btn-sm">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display:inline-block">
+                    <form action="{{ route('students.destroy', $student->id) }}" method="POST"
+                        style="display:inline-block">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">

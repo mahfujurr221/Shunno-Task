@@ -3,14 +3,14 @@
 <div class="shadow-sm card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h4 class="mb-0 card-title">Import Students</h4>
-        <a href="{{ route('students.index') }}" class="btn btn-light btn-sm">
+        <a href="{{ route('students.index') }}" class="btn btn-success btn-sm">
             <i class="bi bi-list"></i> Student List
         </a>
     </div>
 
     <div class="card-body">
         <div class="my-4 row">
-            <p class="text-muted">You can import students in bulk using a CSV or XLSX file. Please download the template, fill it out, and upload it below.</p>
+            <p class="text-muted">You can import students in bulk using a CSV or XLSX file. Please download the template, fill it out, and upload it below. (Default password will be 123456 if not specified.)</p>
             <div class="col-12">
                 <a href="{{ route('template') }}" class="btn btn-success">
                     <i class="bi bi-download"></i> Download Template
@@ -30,7 +30,7 @@
                     <div class="mt-2" id="fileNamePreview" style="font-style: italic; color: #555;">No file chosen</div>
                 </div>
 
-                <div class="col-md-6 text-md-start text-sm-end">
+                <div class="col-md-12 d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary btn-lg">
                         <i class="bi bi-upload"></i> Import Students
                     </button>

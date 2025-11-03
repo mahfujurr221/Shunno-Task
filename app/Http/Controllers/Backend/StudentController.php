@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Exports\StudentsExport;
 use App\Exports\StudentsTemplateExport;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
@@ -299,5 +300,12 @@ class StudentController extends Controller
             toast('Import failed: check the excel file and try again', 'error');
             return back()->with('error', 'Import failed: ' . $e->getMessage());
         }
+    }
+
+    
+    ///////////////////////////// Export Students to Excel ////////////////////////////
+    public function export()
+    {
+        return Excel::download(new StudentsExport, 'students.xlsx');
     }
 }
