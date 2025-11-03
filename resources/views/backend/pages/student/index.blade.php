@@ -52,7 +52,7 @@
                 <a href="{{ route('students.export') }}" class="btn btn-success ms-2">
                     <i class="bi bi-download"></i> Export Students
                 </a>
-                
+
                 <a href="{{ route('students.create') }}" class="btn btn-primary">
                     <i class="bi bi-plus"></i> Add Student
                 </a>
@@ -64,7 +64,7 @@
         <x-table :columns="['#', 'Image', 'Name', 'Email', 'Phone', 'DOB', 'Class', 'Section', 'Action']">
             @forelse($students as $key => $student)
             <tr class="text-center">
-                <td>{{ $key + 1 }}</td>
+                <td>{{ $students->firstItem() + $key }}</td>
                 <td>
                     <img src="{{ asset($student->image ?? 'uploads/students/default.png') }}" alt="Image"
                         class="rounded-circle" style="width:50px; height:50px; object-fit:cover;">
@@ -95,6 +95,9 @@
             </tr>
             @endforelse
         </x-table>
+        <div class="mt-3 d-flex justify-content-end">
+            {{ $students->links() }}
+        </div>
     </div>
 </div>
 

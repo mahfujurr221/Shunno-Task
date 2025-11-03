@@ -27,19 +27,10 @@ class TeacherController extends Controller
         $subjects = Subject::orderBy('id', 'desc')->get();
 
         $teachers = Teacher::with('user', 'subject')
-            ->when($request->name, function ($query, $name) {
-                $query->where('name', 'like', "%{$name}%");
-            })
-            ->when($request->phone, function ($query, $phone) {
-                $query->whereHas('user', function ($q) use ($phone) {
-                    $q->where('phone', 'like', "%{$phone}%");
-                });
-            })
-            ->when($request->subject_id, function ($query, $subject_id) {
-                $query->where('subject_id', $subject_id);
-            })
+            ->filter($request->only(['name', 'phone', 'subject_id']))
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
         return view('backend.pages.teacher.index', compact('teachers', 'subjects'));
     }
@@ -122,7 +113,7 @@ class TeacherController extends Controller
      */
     public function edit(string $id)
     {
-        
+
         $teacher = Teacher::with('user')->findOrFail($id);
         $subjects = Subject::all();
         return view('backend.pages.teacher.edit', compact('teacher', 'subjects'));

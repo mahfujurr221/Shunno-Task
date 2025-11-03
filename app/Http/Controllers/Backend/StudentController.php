@@ -29,31 +29,21 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-        $classes = StudentClass::orderBy('id', 'desc')->get();
-        $sections = StudentSection::orderBy('id', 'desc')->get();
+   public function index(Request $request)
+{
+    $classes = StudentClass::orderBy('id', 'desc')->get();
+    $sections = StudentSection::orderBy('id', 'desc')->get();
 
-        $students = Student::with('user', 'class', 'section')
-            ->when($request->name, function ($query, $name) {
-                $query->where('name', 'like', "%{$name}%");
-            })
-            ->when($request->phone, function ($query, $phone) {
-                $query->whereHas('user', function ($q) use ($phone) {
-                    $q->where('phone', 'like', "%{$phone}%");
-                });
-            })
-            ->when($request->class_id, function ($query, $class_id) {
-                $query->where('class_id', $class_id);
-            })
-            ->when($request->section_id, function ($query, $section_id) {
-                $query->where('section_id', $section_id);
-            })
-            ->orderBy('id', 'desc')
-            ->get();
+    $students = Student::with('user', 'class', 'section')
+        ->filter($request->only(['name', 'phone', 'class_id', 'section_id']))
+        ->orderBy('id', 'desc')
+        ->paginate(15)
+        ->withQueryString();
 
-        return view('backend.pages.student.index', compact('students', 'classes', 'sections'));
-    }
+    return view('backend.pages.student.index', compact('students', 'classes', 'sections'));
+}
+
+
 
 
     /**
@@ -302,7 +292,7 @@ class StudentController extends Controller
         }
     }
 
-    
+
     ///////////////////////////// Export Students to Excel ////////////////////////////
     public function export()
     {
