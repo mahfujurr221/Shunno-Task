@@ -60,7 +60,6 @@
         </div>
     </div>
 
-
     <div class="card-body">
         <x-table :columns="['#', 'Image', 'Name', 'Email', 'Phone', 'DOB', 'Class', 'Section', 'Action']">
             @forelse($students as $key => $student)
