@@ -47,18 +47,23 @@ A Laravel-based **School Management System** with multi-guard authentication and
    cd <project-folder>
 
 2. **Install dependencies**
+    ```bash
     composer install
 
 3. **Configure environment**
+    ```bash
     cp .env.example .env
 
 4. **Generate application key**
+    ```bash
     php artisan key:generate
 
 5. **Run migrations and seed demo data**
+    ```bash
     php artisan migrate --seed
 
 6. **Serve the application**
+    ```bash
     php artisan serve 
 
 
@@ -72,13 +77,16 @@ You can export all students using the Export Students button on the Students pag
 
 
 **Custom artisan command to send exam reminders:**
-php artisan exam:reminder
+    ```bash
+    php artisan exam:reminder
 
 **Mailpit Local Setup (Optional)**
 1. **Run Docker Mailpit:**
+    ```bash
     docker run -d -p 8025:8025 -p 1025:1025 axllent/mailpit
 
 2. **Set .env mail configuration:**
+    ```bash
     MAIL_MAILER=smtp
     MAIL_HOST=127.0.0.1
     MAIL_PORT=1025
@@ -89,7 +97,6 @@ php artisan exam:reminder
     MAIL_FROM_NAME="Shunno App"
 
 **Default Data Seeded**
-
     Super Admins: 2 users (supper-admin@shunno.com, admin and developer account)
     Students: 200 dummy students
     Teachers: 20 dummy teachers
