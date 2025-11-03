@@ -97,15 +97,15 @@ You can export all students using the Export Students button on the Students pag
     MAIL_FROM_NAME="Shunno App"
 
 **Default Data Seeded**
-    Super Admins: 2 users (supper-admin@shunno.com, admin and developer account)
-    Students: 200 dummy students
-    Teachers: 20 dummy teachers
-    Classes: 10 default classes
-    Sections: 5 default sections (A–E)
-    Subjects: 5 default subjects
+- Super Admins: 2 users (supper-admin@shunno.com, admin and developer account)
+- Students: 200 dummy students
+- Teachers: 20 dummy teachers
+- Classes: 10 default classes
+- Sections: 5 default sections (A–E)
+-  Subjects: 5 default subjects
 
 **Roles & Permissions**
 
-    Roles: Super Admin, Teacher, Student
-    Permissions managed with Spatie Laravel Permission
-    Multi-guard authentication implemented for Teachers and Students
+- Roles: Super Admin, Teacher, Student
+- Permissions managed with Spatie Laravel Permission
+- Multi-guard authentication implemented for Teachers and Students
