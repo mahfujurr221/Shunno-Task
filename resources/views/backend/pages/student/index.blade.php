@@ -56,7 +56,7 @@
     </div>
 
     <div class="card-body">
-        <x-table :columns="['#', 'Image', 'Name', 'Email', 'Phone', 'Class', 'Section', 'Action']">
+        <x-table :columns="['#', 'Image', 'Name', 'Email', 'Phone', 'DOB', 'Class', 'Section', 'Action']">
             @forelse($students as $key => $student)
             <tr class="text-center">
                 <td>{{ $key + 1 }}</td>
@@ -67,6 +67,7 @@
                 <td>{{ $student->name }}</td>
                 <td>{{ $student->user->email }}</td>
                 <td>{{ $student->user->phone }}</td>
+                <td>{{ $student->dob }}</td>
                 <td>{{ $student->class->name ?? '-' }}</td>
                 <td>{{ $student->section->name ?? '-' }}</td>
                 <td>

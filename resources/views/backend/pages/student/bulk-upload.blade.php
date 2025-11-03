@@ -10,8 +10,9 @@
 
     <div class="card-body">
         <div class="my-4 row">
-            <div class="col-12 text-end">
-                <a href="{{ route('students.template') }}" class="btn btn-success">
+            <p class="text-muted">You can import students in bulk using a CSV or XLSX file. Please download the template, fill it out, and upload it below.</p>
+            <div class="col-12">
+                <a href="{{ route('template') }}" class="btn btn-success">
                     <i class="bi bi-download"></i> Download Template
                 </a>
             </div>
@@ -21,7 +22,7 @@
             @csrf
             <div class="row g-3 align-items-end">
                 <div class="col-md-6">
-                    <label for="file" class="form-label fw-bold">Upload CSV/XLSX</label>
+                    <label for="file" class="form-label fw-bold">Upload XLSX/CSV</label>
                     <input type="file" name="file" id="file" class="form-control {{ $errors->has('file') ? 'is-invalid' : '' }}" accept=".csv,.xlsx">
                     @error('file')
                         <div class="invalid-feedback">{{ $message }}</div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Exports\StudentsTemplateExport;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\StudentClass;
@@ -235,45 +236,68 @@ class StudentController extends Controller
         }
     }
 
-    //bulk upload form
+    ///////////////////////////// Bulk Upload Form ////////////////////////////
     public function bulkUploadForm()
     {
         return view('backend.pages.student.bulk-upload');
     }
+
     //////////////////////////// Download CSV Template ////////////////////////////
+
+    // public function downloadTemplate()
+    // {
+    //     $headers = ['name', 'email', 'phone', 'address', 'dob', 'password', 'class', 'section'];
+
+    //     $callback = function () use ($headers) {
+    //         $file = fopen('php://output', 'w');
+
+    //         fputcsv($file, $headers);
+
+    //         fclose($file);
+    //     };
+
+    //     $fileName = 'students_template.csv';
+
+    //     return Response::stream($callback, 200, [
+    //         "Content-Type" => "text/csv; charset=UTF-8",
+    //         "Content-Disposition" => "attachment; filename={$fileName}",
+    //         "Cache-Control" => "no-store, no-cache, must-revalidate, max-age=0",
+    //         "Pragma" => "no-cache",
+    //     ]);
+    // }
 
     public function downloadTemplate()
     {
-        $headers = ['first_name', 'last_name', 'email', 'phone', 'address', 'dob', 'class', 'section'];
-
-        $callback = function () use ($headers) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, $headers);
-            fclose($file);
-        };
-
-        $fileName = 'students_template.csv';
-        return Response::stream($callback, 200, [
-            "Content-Type" => "text/csv",
-            "Content-Disposition" => "attachment; filename={$fileName}"
-        ]);
+        return Excel::download(new StudentsTemplateExport, 'students_template.xlsx');
     }
 
-
     //////////////////////////// Import Students from CSV ////////////////////////////
-    
+
     public function import(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx,csv'
+            'file' => 'required|mimes:csv,xls,xlsx'
         ]);
 
         try {
-            Excel::import(new StudentsImport, $request->file('file'));
+            $import = new StudentsImport;
+            Excel::import($import, $request->file('file'));
+
             toast('Students imported successfully!', 'success');
-            return redirect()->back();
+
+            // Show skipped rows if any
+            if (!empty($import->skipped)) {
+                $messages = collect($import->skipped)->map(function ($row) {
+                    return $row['email'] ?? $row['name'] . ' - ' . $row['reason'];
+                })->implode(', ');
+
+                toast('Skipped: ' . $messages, 'warning', ['timeOut' => 10000]);
+            }
+
+            return redirect()->route('students.index');
         } catch (\Exception $e) {
-            return back()->with('error', 'Error: ' . $e->getMessage());
+            toast('Import failed: check the excel file and try again', 'error');
+            return back()->with('error', 'Import failed: ' . $e->getMessage());
         }
     }
 }

@@ -46,8 +46,10 @@ Route::middleware('auth')->prefix('back')->group(function () {
 
     /////////////// Students ///////////////
     Route::resource('students', StudentController::class);
+
+    //excel import/export
     Route::get('student-bulk-upload', [StudentController::class, 'bulkUploadForm'])->name('students.bulk-upload.form');
-    Route::get('students/template', [StudentController::class, 'downloadTemplate'])->name('students.template');
+    Route::get('students-template', [StudentController::class, 'downloadTemplate'])->name('template');
     Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
 
 
