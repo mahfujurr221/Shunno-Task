@@ -7,6 +7,8 @@ use App\Models\Setting;
 use App\Models\StudentClass;
 use App\Models\StudentSection;
 use App\Models\Subject;
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -37,7 +39,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('developer'),
         ]);
 
-        //10 default classes
+        // 10 default classes
         for ($i = 1; $i <= 10; $i++) {
             StudentClass::create([
                 'name' => 'Class ' . $i,
@@ -85,5 +87,19 @@ class DatabaseSeeder extends Seeder
 
         // Call Permission Seeder
         $this->call(PermissionTableSeeder::class);
+
+        // -----------------------
+        // Seed Students and Teachers
+        // -----------------------
+
+        // 200 students
+        Student::factory(200)->create()->each(function ($student) {
+            $student->user->assignRole('Student');
+        });
+
+        // 20 teachers
+        Teacher::factory(20)->create()->each(function ($teacher) {
+            $teacher->user->assignRole('Teacher');
+        });
     }
 }
