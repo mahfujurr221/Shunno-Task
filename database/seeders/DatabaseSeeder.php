@@ -3,11 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\About;
-use App\Models\Owner;
-use App\Models\Banner;
 use App\Models\Setting;
-use App\Models\Headline;
+use App\Models\StudentClass;
+use App\Models\StudentSection;
+use App\Models\Subject;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -22,10 +21,10 @@ class DatabaseSeeder extends Seeder
         $superAdmin = User::create([
             'fname' => 'Super',
             'lname' => 'Admin',
-            'type' => 'supper-admin', 
+            'type' => 'supper-admin',
             'email' => 'supper-admin@shunno.com',
             'phone' => '00000000000',
-            'password' => bcrypt('admin'),  
+            'password' => bcrypt('admin'),
         ]);
 
         // Creating developer user
@@ -38,13 +37,36 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('developer'),
         ]);
 
+        //10 default classes
+        for ($i = 1; $i <= 10; $i++) {
+            StudentClass::create([
+                'name' => 'Class ' . $i,
+            ]);
+        }
+
+        // 5 default sections
+        $sections = ['A', 'B', 'C', 'D', 'E'];
+        foreach ($sections as $sectionName) {
+            StudentSection::create([
+                'name' => $sectionName,
+            ]);
+        }
+
+        // 5 default subjects
+        $subjects = ['Mathematics', 'Science', 'History', 'Geography', 'English'];
+        foreach ($subjects as $subjectName) {
+            Subject::create([
+                'name' => $subjectName,
+            ]);
+        }
+
         // Creating roles
         Role::create(['name' => 'Super Admin', 'guard_name' => 'web']);
         Role::create(['name' => 'Teacher', 'guard_name' => 'web']);
         Role::create(['name' => 'Student', 'guard_name' => 'web']);
 
         // Creating settings
-        $setting = Setting::create([
+        Setting::create([
             'site_name' => 'Shunno',
             'site_title' => 'Shunno',
             'logo' => 'logo.png',
